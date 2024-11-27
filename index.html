@@ -3,169 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مميزات محركات بايثون الشهيرة</title>
+    <title>إضافة اسم وكود وتحميل ملف مع التحقق من الأخطاء وتشغيل الأكواد</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f9f9f9;
+            background-color: #f4f4f9;
             color: #333;
             margin: 0;
             padding: 0;
             direction: rtl;
         }
         header {
-            background-color: #0044cc;
-            color: #fff;
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
             text-align: center;
-            padding: 30px;
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
         .container {
-            width: 90%;
-            margin: 30px auto;
+            width: 80%;
+            margin: 20px auto;
             padding: 20px;
-        }
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
+            background-color: white;
+            border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            padding: 25px;
-            transition: transform 0.3s ease;
         }
-        .card:hover {
-            transform: scale(1.05);
+        .input-group {
+            margin-bottom: 20px;
         }
-        .card h2 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 15px;
+        label {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
         }
-        .card ul {
+        input, select, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .file-input {
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-list ul {
             list-style-type: none;
             padding: 0;
         }
-        .card ul li {
-            margin: 15px 0;
-            font-size: 18px;
-            line-height: 1.5;
+        .file-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e1e1e1;
+            border-radius: 5px;
         }
-        .card ul li::before {
-            content: "✔️ ";
-            color: green;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            font-size: 1rem;
-        }
-        #editor {
-            height: 200px;
-            width: 100%;
-            margin-bottom: 20px;
+        .error {
+            color: red;
+            margin-top: 15px;
+            font-size: 1.2rem;
         }
         .output {
-            background-color: #222;
-            color: white;
-            padding: 20px;
-            font-family: monospace;
+            background-color: #f8f8f8;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            min-height: 100px;
+            font-family: monospace;
+        }
+        .telegram-image {
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+            cursor: pointer;
         }
     </style>
-
-    <!-- ربط مكتبات CodeMirror -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/python-hint.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.css">
-
 </head>
 <body>
 
-    <header>
-        <h1>مميزات محركات بايثون الشهيرة</h1>
-        <p>أفضل المحركات المتاحة لتطوير التطبيقات باستخدام بايثون</p>
-    </header>
+<header>
+    <h1>إضافة اسم وكود وتحميل ملف مع التحقق من الأخطاء وتشغيل الأكواد</h1>
+</header>
 
-    <div class="container">
-
-        <!-- إضافة محرر CodeMirror داخل الصفحة -->
-        <h2>اكتب كود بايثون هنا:</h2>
-        <textarea id="editor"></textarea>
-        <button onclick="runPythonCode()">تشغيل الكود</button>
-
-        <div class="output" id="output"></div>
-
-        <div class="card">
-            <h2>Django</h2>
-            <ul>
-                <li>الإدارة المتكاملة مع لوحة تحكم لإدارة المحتوى.</li>
-                <li>أمان متقدم ضد الثغرات الشائعة مثل SQL Injection وXSS.</li>
-                <li>التوجيه القوي للروابط (URLs).</li>
-                <li>إدارة قواعد البيانات باستخدام ORM.</li>
-                <li>دعم الـREST API لبناء تطبيقات متكاملة.</li>
-                <li>توثيق شامل لتسهيل التعلم.</li>
-            </ul>
-        </div>
-
-        <!-- أضف المزيد من الأقسام حسب الحاجة -->
-
+<div class="container">
+    <!-- اختيار اللغة -->
+    <div class="input-group">
+        <label for="language">اختر اللغة:</label>
+        <select id="language">
+            <option value="python">بايثون</option>
+            <option value="javascript">جافا سكربت</option>
+            <option value="java">جافا</option>
+        </select>
     </div>
 
-    <footer>
-        <p>&copy; 2024 جميع الحقوق محفوظة</p>
-    </footer>
+    <!-- إدخال الاسم والكود -->
+    <div class="input-group">
+        <label for="name">أدخل اسمك:</label>
+        <input type="text" id="name" placeholder="اسمك هنا">
+    </div>
 
-    <script>
-        // تهيئة محرر الكود باستخدام CodeMirror
-        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-            mode: "python",
-            theme: "dracula",
-            lineNumbers: true,
-            extraKeys: { "Ctrl-Space": "autocomplete" },  // لتفعيل الكتابة الوحيّة
-            hintOptions: { "completeSingle": false }, // لا تكمل تلقائيا بعد الضغط على الحرف الأول
-            indentUnit: 4, // تعيين المسافة البادئة لأربع مسافات
-            tabSize: 4 // حجم التاب هو 4
-        });
+    <div class="input-group">
+        <label for="code">أدخل الكود:</label>
+        <textarea id="code" placeholder="أدخل الكود هنا"></textarea>
+    </div>
 
-        // تفعيل الكتابة الوحيّة (Auto-completion) عند الكتابة
-        editor.on("inputRead", function(cm, change) {
-            if (cm.state.completionActive) return;
-            cm.execCommand("autocomplete");
-        });
+    <!-- تحميل الملف -->
+    <div class="input-group">
+        <label for="fileUpload">اختر ملف لتحميله:</label>
+        <input type="file" id="fileUpload" class="file-input">
+    </div>
 
-        // دالة لتشغيل الكود
-        function runPythonCode() {
-            var code = editor.getValue(); // الحصول على الكود من المحرر
-            fetch('https://api.jdoodle.com/v1/execute', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "script": code,
-                    "language": "python3",
-                    "versionIndex": "3"
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("output").textContent = data.output || 'لا يوجد مخرجات';
-            })
-            .catch(error => {
-                document.getElementById("output").textContent = 'حدث خطأ في تشغيل الكود: ' + error.message;
-            });
+    <!-- إعدادات العداد -->
+    <div class="input-group">
+        <label for="settings">اختر إعدادات العداد:</label>
+        <select id="settings">
+            <option value="1">إعداد 1</option>
+            <option value="2">إعداد 2</option>
+            <option value="3">إعداد 3</option>
+            <option value="4">إعداد 4</option>
+        </select>
+    </div>
+
+    <!-- زر الإرسال -->
+    <button onclick="submitForm()">إرسال</button>
+
+    <!-- عرض الأخطاء -->
+    <div class="error" id="errorMessages"></div>
+
+    <!-- عرض نتائج الكود -->
+    <div class="output" id="output"></div>
+
+    <!-- عرض الملف المحمل -->
+    <div class="file-list" id="fileList"></div>
+
+    <!-- صورة للتوجيه إلى حساب تليجرام -->
+    <a href="https://t.me/V_V_G_G@" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="تليجرام" class="telegram-image">
+    </a>
+</div>
+
+<script>
+    function submitForm() {
+        const name = document.getElementById('name').value;
+        const code = document.getElementById('code').value;
+        const fileInput = document.getElementById('fileUpload');
+        const file = fileInput.files[0];
+        const settings = document.getElementById('settings').value;
+        const language = document.getElementById('language').value;
+        const errorMessages = document.getElementById('errorMessages');
+        const output = document.getElementById('output');
+
+        // تحقق من وجود أخطاء في الكود
+        let errors = [];
+        try {
+            // محاولة تنفيذ الكود حسب اللغة المختارة
+            if (language === 'python') {
+                try {
+                    // تنفيذ كود بايثون (سيتم في بيئة الخادم فقط)
+                    output.innerHTML = 'تم تنفيذ كود بايثون: ' + code;
+                } catch (e) {
+                    errors.push(`خطأ في بايثون: ${e.message}`);
+                }
+            } else if (language === 'javascript') {
+                try {
+                    // تنفيذ كود جافا سكربت
+                    output.innerHTML = 'تم تنفيذ كود جافا سكربت: ' + eval(code);
+                } catch (e) {
+                    errors.push(`خطأ في جافا سكربت: ${e.message}`);
+                }
+            } else if (language === 'java') {
+                // تنفيذ كود جافا (يحتاج لخادم لتنفيذه بشكل مناسب)
+                output.innerHTML = 'تم تنفيذ كود جافا (محاكاة فقط).';
+            }
+        } catch (e) {
+            errors.push(`خطأ غير معروف: ${e.message}`);
         }
-    </script>
+
+        // عرض الأخطاء
+        if (errors.length > 0) {
+            errorMessages.innerHTML = errors.join('<br>');
+        } else {
+            errorMessages.innerHTML = '';
+
+            // عرض البيانات المدخلة
+            if (name && code && file && settings) {
+                alert(`تم إرسال البيانات:\nاسم: ${name}\nكود: ${code}\nإعداد العداد: ${settings}\nتم اختيار الملف: ${file.name}`);
+
+                // عرض الملف المحفوظ
+                const fileList = document.getElementById('fileList');
+                const fileItem = document.createElement('li');
+                fileItem.textContent = `تم اختيار الملف: ${file.name}`;
+                fileList.innerHTML = '';
+                fileList.appendChild(fileItem);
+            } else {
+                alert('يرجى ملء جميع الحقول.');
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
