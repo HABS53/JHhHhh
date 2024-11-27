@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إضافة اسم وكود وتحميل ملف مع التحقق من الأخطاء وتشغيل الأكواد</title>
+    <title>محرك عدادات مع اختيار خيارات</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -36,173 +36,119 @@
             font-size: 1.2rem;
             margin-bottom: 5px;
         }
-        input, select, button, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .button-container {
+            display: flex;
+            justify-content: space-between;
         }
-        .file-input {
+        .button {
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 30%;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .dropdown-container {
+            display: none;
+            margin-top: 10px;
             padding: 10px;
             background-color: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .file-list {
-            margin-top: 20px;
-        }
-        .file-list ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .file-list li {
-            margin: 10px 0;
-            padding: 10px;
+        .dropdown-item {
+            padding: 8px;
             background-color: #e1e1e1;
             border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 8px;
         }
-        .error {
-            color: red;
-            margin-top: 15px;
-            font-size: 1.2rem;
+        .dropdown-item:hover {
+            background-color: #ccc;
         }
         .output {
             background-color: #f8f8f8;
             padding: 10px;
-            margin-top: 15px;
+            margin-top: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-family: monospace;
-        }
-        .telegram-image {
-            display: block;
-            margin: 20px auto;
-            width: 200px;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>إضافة اسم وكود وتحميل ملف مع التحقق من الأخطاء وتشغيل الأكواد</h1>
+    <h1>محرك عدادات مع اختيار خيارات</h1>
 </header>
 
 <div class="container">
-    <!-- اختيار اللغة -->
+    <!-- زر لاختيار اللغة -->
     <div class="input-group">
-        <label for="language">اختر اللغة:</label>
-        <select id="language">
-            <option value="python">بايثون</option>
-            <option value="javascript">جافا سكربت</option>
-            <option value="java">جافا</option>
-        </select>
+        <label>اختر لغة البرمجة:</label>
+        <div class="button-container">
+            <button class="button" onclick="toggleDropdown('languageDropdown')">اختر لغة</button>
+        </div>
+        <div class="dropdown-container" id="languageDropdown">
+            <div class="dropdown-item" onclick="setOption('language', 'بايثون')">بايثون</div>
+            <div class="dropdown-item" onclick="setOption('language', 'جافا سكربت')">جافا سكربت</div>
+            <div class="dropdown-item" onclick="setOption('language', 'جافا')">جافا</div>
+        </div>
     </div>
 
-    <!-- إدخال الاسم والكود -->
+    <!-- زر لاختيار إعدادات العدادات -->
     <div class="input-group">
-        <label for="name">أدخل اسمك:</label>
-        <input type="text" id="name" placeholder="اسمك هنا">
+        <label>اختر إعدادات العداد:</label>
+        <div class="button-container">
+            <button class="button" onclick="toggleDropdown('settingsDropdown')">اختر إعداد</button>
+        </div>
+        <div class="dropdown-container" id="settingsDropdown">
+            <div class="dropdown-item" onclick="setOption('settings', 'إعداد 1')">إعداد 1</div>
+            <div class="dropdown-item" onclick="setOption('settings', 'إعداد 2')">إعداد 2</div>
+            <div class="dropdown-item" onclick="setOption('settings', 'إعداد 3')">إعداد 3</div>
+        </div>
     </div>
 
+    <!-- زر لتحميل ملف -->
     <div class="input-group">
-        <label for="code">أدخل الكود:</label>
-        <textarea id="code" placeholder="أدخل الكود هنا"></textarea>
-    </div>
-
-    <!-- تحميل الملف -->
-    <div class="input-group">
-        <label for="fileUpload">اختر ملف لتحميله:</label>
+        <label>اختر ملف لتحميله:</label>
         <input type="file" id="fileUpload" class="file-input">
     </div>
 
-    <!-- إعدادات العداد -->
-    <div class="input-group">
-        <label for="settings">اختر إعدادات العداد:</label>
-        <select id="settings">
-            <option value="1">إعداد 1</option>
-            <option value="2">إعداد 2</option>
-            <option value="3">إعداد 3</option>
-            <option value="4">إعداد 4</option>
-        </select>
-    </div>
-
-    <!-- زر الإرسال -->
-    <button onclick="submitForm()">إرسال</button>
-
-    <!-- عرض الأخطاء -->
-    <div class="error" id="errorMessages"></div>
-
-    <!-- عرض نتائج الكود -->
+    <!-- عرض نتائج الاختيارات -->
     <div class="output" id="output"></div>
-
-    <!-- عرض الملف المحمل -->
-    <div class="file-list" id="fileList"></div>
-
-    <!-- صورة للتوجيه إلى حساب تليجرام -->
-    <a href="https://t.me/V_V_G_G@" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="تليجرام" class="telegram-image">
-    </a>
 </div>
 
 <script>
-    function submitForm() {
-        const name = document.getElementById('name').value;
-        const code = document.getElementById('code').value;
-        const fileInput = document.getElementById('fileUpload');
-        const file = fileInput.files[0];
-        const settings = document.getElementById('settings').value;
-        const language = document.getElementById('language').value;
-        const errorMessages = document.getElementById('errorMessages');
-        const output = document.getElementById('output');
-
-        // تحقق من وجود أخطاء في الكود
-        let errors = [];
-        try {
-            // محاولة تنفيذ الكود حسب اللغة المختارة
-            if (language === 'python') {
-                try {
-                    // تنفيذ كود بايثون (سيتم في بيئة الخادم فقط)
-                    output.innerHTML = 'تم تنفيذ كود بايثون: ' + code;
-                } catch (e) {
-                    errors.push(`خطأ في بايثون: ${e.message}`);
-                }
-            } else if (language === 'javascript') {
-                try {
-                    // تنفيذ كود جافا سكربت
-                    output.innerHTML = 'تم تنفيذ كود جافا سكربت: ' + eval(code);
-                } catch (e) {
-                    errors.push(`خطأ في جافا سكربت: ${e.message}`);
-                }
-            } else if (language === 'java') {
-                // تنفيذ كود جافا (يحتاج لخادم لتنفيذه بشكل مناسب)
-                output.innerHTML = 'تم تنفيذ كود جافا (محاكاة فقط).';
-            }
-        } catch (e) {
-            errors.push(`خطأ غير معروف: ${e.message}`);
-        }
-
-        // عرض الأخطاء
-        if (errors.length > 0) {
-            errorMessages.innerHTML = errors.join('<br>');
-        } else {
-            errorMessages.innerHTML = '';
-
-            // عرض البيانات المدخلة
-            if (name && code && file && settings) {
-                alert(`تم إرسال البيانات:\nاسم: ${name}\nكود: ${code}\nإعداد العداد: ${settings}\nتم اختيار الملف: ${file.name}`);
-
-                // عرض الملف المحفوظ
-                const fileList = document.getElementById('fileList');
-                const fileItem = document.createElement('li');
-                fileItem.textContent = `تم اختيار الملف: ${file.name}`;
-                fileList.innerHTML = '';
-                fileList.appendChild(fileItem);
-            } else {
-                alert('يرجى ملء جميع الحقول.');
-            }
-        }
+    // وظيفة لتبديل عرض القائمة المنسدلة
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
+
+    // وظيفة لاختيار الخيارات وتحديث النتائج
+    function setOption(optionType, optionValue) {
+        const output = document.getElementById('output');
+        output.innerHTML = `تم اختيار ${optionType}: ${optionValue}`;
+
+        // إخفاء القائمة المنسدلة بعد الاختيار
+        const dropdown = document.getElementById(optionType + 'Dropdown');
+        dropdown.style.display = 'none';
+    }
+
+    // عند تحميل ملف
+    document.getElementById('fileUpload').addEventListener('change', function() {
+        const file = this.files[0];
+        const output = document.getElementById('output');
+        if (file) {
+            output.innerHTML += `<br>تم اختيار الملف: ${file.name}`;
+        }
+    });
 </script>
 
 </body>
