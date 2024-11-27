@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مميزات محركات بايثون الشهيرة</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        header {
+            background-color: #0044cc;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+            font-size: 2rem;
+        }
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .card ul li {
+            margin: 15px 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .card ul li::before {
+            content: "✔️ ";
+            color: green;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-size: 1rem;
+        }
+        #editor {
+            height: 200px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .output {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            font-family: monospace;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+    </style>
+
+    <!-- ربط مكتبات CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/python-hint.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.css">
+
+</head>
+<body>
+
+    <header>
+        <h1>مميزات محركات بايثون الشهيرة</h1>
+        <p>أفضل المحركات المتاحة لتطوير التطبيقات باستخدام بايثون</p>
+    </header>
+
+    <div class="container">
+
+        <!-- إضافة محرر CodeMirror داخل الصفحة -->
+        <h2>اكتب كود بايثون هنا:</h2>
+        <textarea id="editor"></textarea>
+        <button onclick="runPythonCode()">تشغيل الكود</button>
+
+        <div class="output" id="output"></div>
+
+        <div class="card">
+            <h2>Django</h2>
+            <ul>
+                <li>الإدارة المتكاملة مع لوحة تحكم لإدارة المحتوى.</li>
+                <li>أمان متقدم ضد الثغرات الشائعة مثل SQL Injection وXSS.</li>
+                <li>التوجيه القوي للروابط (URLs).</li>
+                <li>إدارة قواعد البيانات باستخدام ORM.</li>
+                <li>دعم الـREST API لبناء تطبيقات متكاملة.</li>
+                <li>توثيق شامل لتسهيل التعلم.</li>
+            </ul>
+        </div>
+
+        <!-- أضف المزيد من الأقسام حسب الحاجة -->
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        // تهيئة محرر الكود باستخدام CodeMirror
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "python",
+            theme: "dracula",
+            lineNumbers: true,
+            extraKeys: { "Ctrl-Space": "autocomplete" },  // لتفعيل الكتابة الوحيّة
+            hintOptions: { "completeSingle": false }, // لا تكمل تلقائيا بعد الضغط على الحرف الأول
+            indentUnit: 4, // تعيين المسافة البادئة لأربع مسافات
+            tabSize: 4 // حجم التاب هو 4
+        });
+
+        // تفعيل الكتابة الوحيّة (Auto-completion) عند الكتابة
+        editor.on("inputRead", function(cm, change) {
+            if (cm.state.completionActive) return;
+            cm.execCommand("autocomplete");
+        });
+
+        // دالة لتشغيل الكود
+        function runPythonCode() {
+            var code = editor.getValue(); // الحصول على الكود من المحرر
+            fetch('https://api.jdoodle.com/v1/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "script": code,
+                    "language": "python3",
+                    "versionIndex": "3"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").textContent = data.output || 'لا يوجد مخرجات';
+            })
+            .catch(error => {
+                document.getElementById("output").textContent = 'حدث خطأ في تشغيل الكود: ' + error.message;
+            });
+        }
+    </script>
+
+</body>
+</html>
